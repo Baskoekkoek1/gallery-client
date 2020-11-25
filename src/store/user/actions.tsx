@@ -35,6 +35,21 @@ const userLogin = (email: string, password: string) => {
   };
 };
 
+const signUp = (name: string, email: string, password: string) => {
+  return async (dispatch: Function, getState: Function) => {
+    try {
+      const response = await axios.post(`${apiUrl}/signup`, {
+        name,
+        email,
+        password,
+      });
+      dispatch(loginSuccess(response.data));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 const userLogOut = () => ({ type: "LOG_OUT" });
 
-export { userLogin, userLogOut };
+export { userLogin, userLogOut, signUp };
