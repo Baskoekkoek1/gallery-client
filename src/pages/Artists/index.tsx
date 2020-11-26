@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { apiUrl } from "../../config/constants";
-import { Card, CardDeck, CardGroup } from "react-bootstrap";
+import { Card, CardDeck } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Artists() {
@@ -59,7 +59,7 @@ export default function Artists() {
                 },
               }}
             >
-              <Card style={{ width: "200px" }}>
+              <Card style={{ width: "200px", height: "330px" }}>
                 <Card.Img variant="top" src={res._links.thumbnail.href} />
                 <Card.Body>
                   <Card.Title>{res.title}</Card.Title>
