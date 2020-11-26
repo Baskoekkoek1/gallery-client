@@ -4,6 +4,7 @@ import SignUp from "../src/pages/SignUp";
 import Login from "../src/pages/Login";
 import Navigation from "./components";
 import Home from "./pages/Home";
+import Artists from "./pages/Artists";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/artists" component={Artists} />
       </Switch>
     </div>
   );
