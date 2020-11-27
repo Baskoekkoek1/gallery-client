@@ -5,6 +5,8 @@ import Login from "../src/pages/Login";
 import Navigation from "./components";
 import Home from "./pages/Home";
 import Artists from "./pages/Artists";
+import artistPage from "./pages/artistPage";
+import Artwork from "./pages/artworkPage";
 
 function App() {
   return (
@@ -14,7 +16,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/artists/:name" component={artistPage} />
         <Route path="/artists" component={Artists} />
+        <Route path="/artwork/:id" component={Artwork} />
       </Switch>
     </div>
   );

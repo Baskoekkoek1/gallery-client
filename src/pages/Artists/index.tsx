@@ -4,7 +4,8 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { apiUrl } from "../../config/constants";
-import { Card, CardDeck, CardGroup } from "react-bootstrap";
+import { Card, CardDeck } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function Artists() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,18 +47,25 @@ export default function Artists() {
         </Form>
       </Container>
       <CardDeck style={{ display: "flex", flexDirection: "row" }}>
-        {results.map((res) => {
+        {results.map((res: any, index) => {
           return (
-            <Card style={{ width: "200px" }}>
-              {/* 
-  // @ts-ignore */}
-              {/* <Card.Img variant="top" src={res._links.thumbnail.href} /> */}
-              <Card.Body>
-                {/* 
-  // @ts-ignore */}
-                <Card.Title>{res.title}</Card.Title>
-              </Card.Body>
-            </Card>
+            <Link
+              key={index}
+              to={{
+                pathname: `/artists/${res.title}`,
+                //@ts-ignore
+                props: {
+                  link: res._links.self.href,
+                },
+              }}
+            >
+              <Card style={{ width: "200px", height: "330px" }}>
+                <Card.Img variant="top" src={res._links.thumbnail.href} />
+                <Card.Body>
+                  <Card.Title>{res.title}</Card.Title>
+                </Card.Body>
+              </Card>
+            </Link>
           );
         })}
       </CardDeck>
