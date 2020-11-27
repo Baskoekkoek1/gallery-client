@@ -34,10 +34,10 @@ export default function Gallery() {
 
   useEffect(() => {
     dispatch(fetchOneGallery(parseInt(id)));
-    async function dataFetch() {
-      await getArtworks();
-    }
-    dataFetch();
+    // async function dataFetch() {
+    //   await getArtworks();
+    // }
+    getArtworks();
   }, [dispatch]);
 
   async function getArtworks() {
