@@ -11,6 +11,17 @@ export default function ArtistPage(props) {
   //@ts-ignore
   //   console.log("route", route_params.name);
 
+  // type ArtistData = {
+  //   name: string;
+  //   birthday: string;
+  //   deathday: string;
+  //   _links: {
+  //     thumbnail:{
+  //       href:string;
+  //     }
+  //   }
+  // }
+
   const [artistData, setArtistData] = useState({});
   const [artworks, setArtworks] = useState([]);
   //@ts-ignore
@@ -35,7 +46,6 @@ export default function ArtistPage(props) {
   }
   //@ts-ignore
   async function fetchArtworks(link) {
-    console.log("I GOT CALLED");
     const response = await axios.get(
       //@ts-ignore
       `${apiUrl}/artists/${route_params.name}/artworks`,
@@ -44,11 +54,11 @@ export default function ArtistPage(props) {
       }
     );
     setArtworks(response.data._embedded.artworks);
-    console.log("responseARTWORKS", response.data._embedded.artworks);
+    // console.log("responseARTWORKS", response.data._embedded.artworks);
   }
 
-  console.log("artistData", artistData);
-  console.log("artworks", artworks);
+  // console.log("artistData", artistData);
+  // console.log("artworks", artworks);
 
   return (
     <div>
@@ -60,7 +70,7 @@ export default function ArtistPage(props) {
         </h1>
         {/* 
   // @ts-ignore */}
-        <img src={artistData?._links?.thumbnail.href} />
+        <img src={artistData?._links?.thumbnail?.href} />
         <div>
           {/* 
   // @ts-ignore */}
