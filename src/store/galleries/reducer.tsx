@@ -16,7 +16,6 @@ export default (state = initialState, action: Action) => {
       return { loading: false, all_galleries: action.payload };
     case "ONE_GALLERY_FETCHED":
       return { ...state, selected_gallery: action.payload };
-
     default:
       return state;
   }

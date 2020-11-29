@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
+import { selectUser } from "../user/selectors";
 
 export type GalleriesData = { galleries: object[] };
 export type oneGalleryData = {

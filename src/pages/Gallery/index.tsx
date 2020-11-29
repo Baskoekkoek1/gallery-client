@@ -22,7 +22,7 @@ export type Artwork = {
 
 export default function Gallery() {
   const dispatch = useDispatch();
-  const [artworks, setArtworks] = useState([]);
+  // const [artworks, setArtworks] = useState([]);
 
   const thisGallery = useSelector(selectOneGallery);
   const all_artworks: Object[] = useSelector(selectPaintings);
@@ -37,36 +37,36 @@ export default function Gallery() {
     // async function dataFetch() {
     //   await getArtworks();
     // }
-    getArtworks();
+    // getArtworks();
   }, [dispatch]);
 
-  async function getArtworks() {
-    console.log("CALLED");
-    all_artworks?.map((artwork) => {
-      async function fetchArtwork() {
-        const response = await axios.get(`${apiUrl}/galleries/${id}/artwork`, {
-          params: {
-            //@ts-ignore
-            apiArtworkUrl: `https://api.artsy.net/api/artworks/${artwork.apiID}`,
-          },
-        });
-        console.log("response", response);
-        //@ts-ignore
-        setArtworks(response.data);
-      }
-      fetchArtwork();
-    });
-  }
-  console.log("artworks", artworks);
+  // async function getArtworks() {
+  //   console.log("CALLED");
+  //   all_artworks?.map((artwork) => {
+  //     async function fetchArtwork() {
+  //       const response = await axios.get(`${apiUrl}/galleries/${id}/artwork`, {
+  //         params: {
+  //           //@ts-ignore
+  //           apiArtworkUrl: `https://api.artsy.net/api/artworks/${artwork.apiID}`,
+  //         },
+  //       });
+  //       console.log("response", response);
+  //       //@ts-ignore
+  //       setArtworks(response.data);
+  //     }
+  //     fetchArtwork();
+  //   });
+  // }
+  // console.log("artworks", artworks);
 
-  console.log("artworks", artworks);
+  // console.log("artworks", artworks);
   return (
     <div>
       <Jumbotron>
         <h1>{thisGallery?.title}</h1>
         <p>{thisGallery?.description}</p>
       </Jumbotron>
-      {!artworks ? (
+      {/* {!artworks ? (
         <h1>LOADING</h1>
       ) : (
         artworks.map((artwork: Artwork) => {
@@ -74,7 +74,7 @@ export default function Gallery() {
             <img key={artwork.id} src={artwork._links.thumbnail.href}></img>
           );
         })
-      )}
+      )} */}
     </div>
   );
 }

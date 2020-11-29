@@ -1,5 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
+import { selectUser } from "./selectors";
 
 export type UserWithToken = {
   createdAt: string;
@@ -9,11 +10,19 @@ export type UserWithToken = {
   token: string;
   updatedAt: string;
 };
+export type Painting = { apiID: string };
 
 const loginSuccess = (userWithToken: UserWithToken) => {
   return {
     type: "LOGIN_SUCCESS",
     payload: userWithToken,
+  };
+};
+
+const addPaintingSucces = (data: Painting) => {
+  return {
+    type: "ADD_PAINTING_SUCCES",
+    payload: data,
   };
 };
 
@@ -51,5 +60,25 @@ const signUp = (name: string, email: string, password: string) => {
 };
 
 const userLogOut = () => ({ type: "LOG_OUT" });
+
+export function addPainting(apiID: string) {
+  return async function thunk(dispatch: Function, getState: Function) {
+    const { gallery, token } = selectUser(getState());
+
+    const response = await axios.post(
+      `${apiUrl}/galleries/${gallery.id}/add-artwork`,
+      {
+        apiID,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    // console.log("Add painting:", response.data);
+    dispatch(addPaintingSucces(response.data.painting));
+  };
+}
 
 export { userLogin, userLogOut, signUp };
