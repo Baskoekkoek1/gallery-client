@@ -32,12 +32,21 @@ export default function Artwork(props) {
     fetchData();
   }, []);
 
-  const addToGallery = (apiID: string) => {
-    dispatch(addPainting(apiID));
-  };
+  // const addToGallery = (apiID: string) => {
+  //   dispatch(addPainting(apiID));
+  // };
 
-  const removeFromGallery = (apiID: string) => {
-    dispatch(deletePainting(apiID, galleryId));
+  // const removeFromGallery = (apiID: string) => {
+  //   dispatch(deletePainting(apiID, galleryId));
+  // };
+
+  const togglePainting = (apiID: string) => {
+    //@ts-ignore
+    if (user.gallery.paintings.some((painting) => painting.apiID === apiID)) {
+      dispatch(deletePainting(apiID, galleryId));
+    } else {
+      dispatch(addPainting(apiID));
+    }
   };
 
   console.log("artworkData", artworkData);
@@ -54,13 +63,13 @@ export default function Artwork(props) {
         </h3>
         {/* 
   // @ts-ignore */}
-        <button onClick={() => addToGallery(artworkData.id)}>
-          Add to My Gallery
-        </button>
-        {/* 
-  // @ts-ignore */}
-        <button onClick={() => removeFromGallery(artworkData.id)}>
-          Remove from My Gallery
+        <button onClick={() => togglePainting(artworkData.id)}>
+          {user.gallery.paintings.some(
+            //@ts-ignore
+            (painting) => painting.apiID === artworkData.id
+          )
+            ? "Remove from my gallery"
+            : "Add to my gallery"}
         </button>
       </Jumbotron>
       {/* 
