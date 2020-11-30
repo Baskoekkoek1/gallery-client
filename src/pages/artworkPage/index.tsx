@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { MouseEvent, useEffect, useState } from "react";
 import { Jumbotron } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
-import { addPainting } from "../../store/user/actions";
+import { addPainting, deletePainting } from "../../store/user/actions";
+import { selectUser } from "../../store/user/selectors";
 
 //@ts-ignore
 export default function Artwork(props) {
@@ -13,6 +14,8 @@ export default function Artwork(props) {
   console.log(apiArtworkLink);
   const route_params = useParams();
   const [artworkData, setArtworkData] = useState({});
+  const user = useSelector(selectUser);
+  const galleryId = user.gallery.id;
 
   async function fetchData() {
     const response = await axios.get(
@@ -29,9 +32,12 @@ export default function Artwork(props) {
     fetchData();
   }, []);
 
-  const addToGallery = (event: MouseEvent<HTMLButtonElement>) => {
-    //@ts-ignore
-    dispatch(addPainting(event.target.value));
+  const addToGallery = (apiID: string) => {
+    dispatch(addPainting(apiID));
+  };
+
+  const removeFromGallery = (apiID: string) => {
+    dispatch(deletePainting(apiID, galleryId));
   };
 
   console.log("artworkData", artworkData);
@@ -48,8 +54,13 @@ export default function Artwork(props) {
         </h3>
         {/* 
   // @ts-ignore */}
-        <button onClick={addToGallery} value={artworkData.id}>
+        <button onClick={() => addToGallery(artworkData.id)}>
           Add to My Gallery
+        </button>
+        {/* 
+  // @ts-ignore */}
+        <button onClick={() => removeFromGallery(artworkData.id)}>
+          Remove from My Gallery
         </button>
       </Jumbotron>
       {/* 

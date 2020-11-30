@@ -19,9 +19,17 @@ const loginSuccess = (userWithToken: UserWithToken) => {
   };
 };
 
-const addPaintingSucces = (data: Painting) => {
+const addPaintingSuccess = (data: Painting) => {
   return {
-    type: "ADD_PAINTING_SUCCES",
+    type: "ADD_PAINTING_SUCCESS",
+    payload: data,
+  };
+};
+
+const deletePaintingSuccess = (data: Painting) => {
+  console.log("CALLED ACTION");
+  return {
+    type: "DELETE_PAINTING_SUCCESS",
     payload: data,
   };
 };
@@ -77,7 +85,27 @@ export function addPainting(apiID: string) {
       }
     );
     // console.log("Add painting:", response.data);
-    dispatch(addPaintingSucces(response.data.painting));
+    dispatch(addPaintingSuccess(response.data.painting));
+  };
+}
+
+export function deletePainting(paintingId: string, galleryId: number) {
+  return async function thunk(dispatch: Function, getState: Function) {
+    const { token } = selectUser(getState());
+    try {
+      const response = await axios.delete(
+        `${apiUrl}/galleries/${galleryId}/${paintingId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Deleted?", response.data);
+      const responsePainting = response.data.thisPainting;
+      console.log("responsePainting", responsePainting);
+      dispatch(deletePaintingSuccess(responsePainting));
+    } catch (error) {}
   };
 }
 
