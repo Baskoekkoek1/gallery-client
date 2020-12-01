@@ -10,7 +10,7 @@ export type UserWithToken = {
   token: string;
   updatedAt: string;
 };
-export type Painting = { apiID: string };
+export type Painting = { apiID: string; id: number };
 
 export type GalleryResponse = {
   id: number;
@@ -102,6 +102,10 @@ export function addPainting(apiID: string) {
     dispatch(addPaintingSuccess(response.data.painting));
   };
 }
+
+// export const getUserWithStoredToken = () => {
+//   return async (dispatch: Function, getState: Function)
+// }
 
 export function deletePainting(paintingId: string, galleryId: number) {
   return async function thunk(dispatch: Function, getState: Function) {

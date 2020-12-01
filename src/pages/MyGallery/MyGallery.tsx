@@ -7,13 +7,14 @@ import { Button, Card, CardDeck, Jumbotron } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Artwork } from "../artistPage";
 import EditGalleryForm from "./EditGalleryForm";
+import { Painting } from "../artworkPage";
 
 export default function MyGallery() {
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [editMode, setEditMode] = useState(false);
   const thisGallery = useSelector(selectMyGallery);
   const id = thisGallery.id;
-  const all_artworks = thisGallery.paintings;
+  const all_artworks: Painting[] = thisGallery.paintings;
   const editModeHandler = () => {
     setEditMode(!editMode);
   };
@@ -22,16 +23,13 @@ export default function MyGallery() {
       await getArtworks();
     }
     dataFetch();
-    //@ts-ignore
   }, [all_artworks?.[0].id]);
 
   async function getArtworks() {
-    // console.log("CALLED");
     all_artworks?.map((artwork) => {
       async function fetchArtwork() {
         const response = await axios.get(`${apiUrl}/galleries/${id}/artwork`, {
           params: {
-            //@ts-ignore
             apiArtworkUrl: `https://api.artsy.net/api/artworks/${artwork.apiID}`,
           },
         });
@@ -39,12 +37,9 @@ export default function MyGallery() {
         const dataResponse = response.data;
         const newPaintings = [...artworks, dataResponse];
         console.log("newPaintings", newPaintings);
-        //@ts-ignore
-
         if (artworks.includes(artwork.id)) {
           return;
         } else {
-          //@ts-ignore
           setArtworks((artworks) => [...artworks, dataResponse]);
         }
       }
@@ -83,7 +78,6 @@ export default function MyGallery() {
                   style={{ width: "200px" }}
                 />
                 <Card.Body>
-                  {/* @ts-ignore */}
                   <Card.Title>{artwork.title}</Card.Title>
                 </Card.Body>
               </Card>

@@ -8,10 +8,6 @@ import { addPainting, deletePainting } from "../../store/user/actions";
 import { selectUser } from "../../store/user/selectors";
 import { RouteParams } from "../../pages/artistPage/index";
 
-export type Painting = {
-  apiID: string;
-};
-
 export type ArtworkData = {
   title: string;
   collecting_institution: string;

@@ -9,29 +9,18 @@ import {
   selectPaintings,
 } from "../../store/galleries/selectors";
 import { apiUrl } from "../../config/constants";
-
-export type Artwork = {
-  id: string;
-  _links: {
-    thumbnail: {
-      href: string;
-    };
-    self: {
-      href: string;
-    };
-  };
-};
+import { Artwork } from "../../store/galleries/types";
+import { Painting } from "../../store/user/actions";
 
 export default function Gallery() {
   const dispatch = useDispatch();
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
 
   const thisGallery = useSelector(selectOneGallery);
-  const all_artworks: Object[] = useSelector(selectPaintings);
+  const all_artworks: Painting[] = useSelector(selectPaintings);
 
   type Params = { id: string };
   const ROUTE_PARAMS: Params = useParams();
-  //   console.log("ROUTE_PARAMS", ROUTE_PARAMS);
   const id = ROUTE_PARAMS.id;
 
   useEffect(() => {
@@ -40,16 +29,13 @@ export default function Gallery() {
       await getArtworks();
     }
     dataFetch();
-    //@ts-ignore
   }, [dispatch, all_artworks?.[0].id]);
 
   async function getArtworks() {
-    // console.log("CALLED");
-    all_artworks?.map((artwork): any => {
+    all_artworks?.forEach((artwork) => {
       async function fetchArtwork() {
         const response = await axios.get(`${apiUrl}/galleries/${id}/artwork`, {
           params: {
-            //@ts-ignore
             apiArtworkUrl: `https://api.artsy.net/api/artworks/${artwork.apiID}`,
           },
         });
@@ -57,12 +43,9 @@ export default function Gallery() {
         const dataResponse = response.data;
         const newPaintings = [...artworks, dataResponse];
         console.log("newPaintings", newPaintings);
-        //@ts-ignore
-
         if (artworks.includes(artwork.id)) {
           return;
         } else {
-          //@ts-ignore
           setArtworks((artworks) => [...artworks, dataResponse]);
         }
       }
@@ -96,7 +79,6 @@ export default function Gallery() {
                   style={{ width: "200px" }}
                 />
                 <Card.Body>
-                  {/* @ts-ignore */}
                   <Card.Title>{artwork.title}</Card.Title>
                 </Card.Body>
               </Card>

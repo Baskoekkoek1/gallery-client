@@ -26,9 +26,7 @@ export default function Galleries() {
   return (
     <div>
       <h1>All Galleries will be here!</h1>
-      {/*/
-      //@ts-ignore/*/}
-      {allGalleries.map((gallery: Gallery) => {
+      {allGalleries.map((gallery: any) => {
         return (
           <CardDeck key={gallery.id}>
             <Link
