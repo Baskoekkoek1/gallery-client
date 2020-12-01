@@ -12,6 +12,13 @@ export type UserWithToken = {
 };
 export type Painting = { apiID: string };
 
+export type GalleryResponse = {
+  id: number;
+  title: string;
+  desription: string;
+  userId: number;
+};
+
 const loginSuccess = (userWithToken: UserWithToken) => {
   return {
     type: "LOGIN_SUCCESS",
@@ -31,6 +38,13 @@ const deletePaintingSuccess = (data: Painting) => {
   return {
     type: "DELETE_PAINTING_SUCCESS",
     payload: data,
+  };
+};
+
+const galleryUpdated = (gallery: GalleryResponse) => {
+  return {
+    type: "GALLERY_UPDATED",
+    payload: gallery,
   };
 };
 
@@ -106,6 +120,26 @@ export function deletePainting(paintingId: string, galleryId: number) {
       console.log("responsePainting", responsePainting);
       dispatch(deletePaintingSuccess(responsePainting));
     } catch (error) {}
+  };
+}
+
+export function updateMyGallery(title: string, description: string) {
+  return async (dispatch: Function, getState: Function) => {
+    const { gallery, token } = selectUser(getState());
+
+    const response = await axios.patch(
+      `${apiUrl}/galleries/${gallery.id}`,
+      {
+        title,
+        description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    dispatch(galleryUpdated(response.data.gallery));
   };
 }
 

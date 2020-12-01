@@ -1,4 +1,4 @@
-import { UserWithToken, Painting } from "./actions";
+import { UserWithToken, Painting, GalleryResponse } from "./actions";
 
 const initialState: State = {
   token: localStorage.getItem("token"),
@@ -18,7 +18,8 @@ type Action =
   | { type: "LOGIN_SUCCESS"; payload: UserWithToken }
   | { type: "LOG_OUT"; payload: null }
   | { type: "ADD_PAINTING_SUCCESS"; payload: Painting }
-  | { type: "DELETE_PAINTING_SUCCESS"; payload: Painting };
+  | { type: "DELETE_PAINTING_SUCCESS"; payload: Painting }
+  | { type: "GALLERY_UPDATED"; payload: GalleryResponse };
 
 type State = {
   token: string | null;
@@ -62,6 +63,12 @@ export default (state: State = initialState, action: Action) => {
         ...state,
         gallery: { ...state.gallery, paintings: newPaintings },
       };
+    case "GALLERY_UPDATED":
+      return {
+        ...state,
+        gallery: { ...action.payload, paintings: state.gallery.paintings },
+      };
+
     default:
       return state;
   }

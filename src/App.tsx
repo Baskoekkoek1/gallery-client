@@ -9,6 +9,7 @@ import artistPage from "./pages/artistPage";
 import Artwork from "./pages/artworkPage";
 import Galleries from "./pages/Galleries";
 import Gallery from "./pages/Gallery";
+import MyGallery from "./pages/MyGallery/MyGallery";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/artwork/:id" component={Artwork} />
         <Route path="/galleries/:id" component={Gallery} />
         <Route exact path="/galleries" component={Galleries} />
+        <Route path="/mygallery" component={MyGallery} />
       </Switch>
     </div>
   );

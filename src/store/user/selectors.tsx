@@ -7,6 +7,7 @@ type State = {
     gallery: {
       id: number;
       title: string;
+      description: string;
       userId: number;
       paintings: object[];
     };
@@ -16,5 +17,7 @@ type State = {
 export const selectToken = (state: State) => state.user.token;
 
 export const selectUser = (state: State) => state.user;
+
+export const selectMyGallery = (state: State) => state.user.gallery;
 
 export {};
