@@ -55,8 +55,7 @@ export default (state: State = initialState, action: Action) => {
       console.log("CALLED");
       const paintingId = action.payload.apiID;
       const newPaintings = state.gallery.paintings.filter(
-        //@ts-ignore
-        (painting: Painting) => painting.apiID !== paintingId
+        (painting: any) => painting.apiID !== paintingId
       );
       console.log("newPaintings", newPaintings);
       return {

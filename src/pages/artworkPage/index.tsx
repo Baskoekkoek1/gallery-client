@@ -30,8 +30,15 @@ export type User = {
   };
 };
 
-//@ts-ignore
-export default function Artwork(props) {
+export type Props = {
+  location: {
+    props: {
+      link: string;
+    };
+  };
+};
+
+export default function Artwork(props: Props) {
   const dispatch = useDispatch();
   const apiArtworkLink = props.location.props.link;
   console.log(apiArtworkLink);
@@ -54,13 +61,9 @@ export default function Artwork(props) {
     fetchData();
   }, []);
 
-  //@ts-ignore
-  const togglePainting = (apiID) => {
+  const togglePainting = (apiID: string) => {
     if (
-      user.gallery.paintings.some(
-        //@ts-ignore
-        (painting: Painting) => painting.apiID === apiID
-      )
+      user.gallery.paintings.some((painting: any) => painting.apiID === apiID)
     ) {
       dispatch(deletePainting(apiID, galleryId));
     } else {
@@ -76,10 +79,10 @@ export default function Artwork(props) {
         <h3>
           <em>{artworkData?.collecting_institution}</em>
         </h3>
+        {/* @ts-ignore */}
         <button onClick={() => togglePainting(artworkData.id)}>
           {user.gallery.paintings.some(
-            //@ts-ignore
-            (painting: Painting) => painting.apiID === artworkData.id
+            (painting: any) => painting.apiID === artworkData.id
           )
             ? "Remove from my gallery"
             : "Add to my gallery"}

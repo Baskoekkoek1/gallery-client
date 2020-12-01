@@ -9,7 +9,6 @@ import {
   selectPaintings,
 } from "../../store/galleries/selectors";
 import { apiUrl } from "../../config/constants";
-import Artwork from "../artworkPage";
 
 export type Artwork = {
   id: string;
@@ -46,7 +45,7 @@ export default function Gallery() {
 
   async function getArtworks() {
     // console.log("CALLED");
-    all_artworks?.map((artwork) => {
+    all_artworks?.map((artwork): any => {
       async function fetchArtwork() {
         const response = await axios.get(`${apiUrl}/galleries/${id}/artwork`, {
           params: {
