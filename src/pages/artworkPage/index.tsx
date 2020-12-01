@@ -4,7 +4,11 @@ import { Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
-import { addPainting, deletePainting } from "../../store/user/actions";
+import {
+  addPainting,
+  deletePainting,
+  Painting,
+} from "../../store/user/actions";
 import { selectUser } from "../../store/user/selectors";
 import { RouteParams } from "../../pages/artistPage/index";
 
@@ -22,7 +26,7 @@ export type ArtworkData = {
 export type User = {
   gallery: {
     id: number;
-    paintings: object[];
+    paintings: Painting[];
   };
 };
 

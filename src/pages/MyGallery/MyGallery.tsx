@@ -7,7 +7,7 @@ import { Button, Card, CardDeck, Jumbotron } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Artwork } from "../artistPage";
 import EditGalleryForm from "./EditGalleryForm";
-import { Painting } from "../artworkPage";
+import { Painting } from "../../store/user/actions";
 
 export default function MyGallery() {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
@@ -23,7 +23,7 @@ export default function MyGallery() {
       await getArtworks();
     }
     dataFetch();
-  }, [all_artworks?.[0].id]);
+  }, [all_artworks?.[0]?.id]);
 
   async function getArtworks() {
     all_artworks?.map((artwork) => {

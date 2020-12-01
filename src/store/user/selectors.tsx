@@ -1,3 +1,5 @@
+import { Painting } from "./actions";
+
 type State = {
   user: {
     token: string;
@@ -9,7 +11,7 @@ type State = {
       title: string;
       description: string;
       userId: number;
-      paintings: object[];
+      paintings: Painting[];
     };
   };
 };

@@ -43,6 +43,7 @@ export default function Gallery() {
         const dataResponse = response.data;
         const newPaintings = [...artworks, dataResponse];
         console.log("newPaintings", newPaintings);
+        //@ts-ignore
         if (artworks.includes(artwork.id)) {
           return;
         } else {

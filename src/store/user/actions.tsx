@@ -1,6 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
-import { selectUser } from "./selectors";
+import { selectToken, selectUser } from "./selectors";
 
 export type UserWithToken = {
   createdAt: string;
@@ -25,6 +25,11 @@ const loginSuccess = (userWithToken: UserWithToken) => {
     payload: userWithToken,
   };
 };
+
+const tokenStillValid = (userWithoutToken: any) => ({
+  type: "TOKEN_STILL_VALID",
+  payload: userWithoutToken,
+});
 
 const addPaintingSuccess = (data: Painting) => {
   return {
@@ -103,9 +108,27 @@ export function addPainting(apiID: string) {
   };
 }
 
-// export const getUserWithStoredToken = () => {
-//   return async (dispatch: Function, getState: Function)
-// }
+export const getUserWithStoredToken = () => {
+  return async (dispatch: Function, getState: Function) => {
+    const token = selectToken(getState());
+
+    if (token === null) return;
+
+    try {
+      const response = await axios.get(`${apiUrl}/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      dispatch(tokenStillValid(response.data));
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.message);
+      } else {
+        console.log(error);
+      }
+      dispatch(userLogOut());
+    }
+  };
+};
 
 export function deletePainting(paintingId: string, galleryId: number) {
   return async function thunk(dispatch: Function, getState: Function) {

@@ -33,7 +33,7 @@ export type RouteParams = {
 };
 
 export type Artwork = {
-  id: string;
+  id: number;
   title: string;
   _links: {
     thumbnail: {
