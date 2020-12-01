@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { MouseEvent, useEffect, useState } from "react";
 import { Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { RouteProps, useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
 import {
   addPainting,
@@ -30,18 +30,19 @@ export type User = {
   };
 };
 
-export type Props = {
-  location: {
-    props: {
-      link: string;
-    };
-  };
-};
+// export type Props = {
+//   location: {
+//     props: {
+//       link: string;
+//     };
+//   };
+// };
 
-export default function Artwork(props: Props) {
+export default function Artwork(props: RouteProps) {
   const dispatch = useDispatch();
-  const apiArtworkLink = props.location.props.link;
-  console.log(apiArtworkLink);
+  const params = new URLSearchParams(props?.location?.search);
+  const apiArtworkLink = params.get("apiArtworkLink");
+
   const route_params: RouteParams = useParams();
   const [artworkData, setArtworkData] = useState<Partial<ArtworkData>>({});
   const user: User = useSelector(selectUser);

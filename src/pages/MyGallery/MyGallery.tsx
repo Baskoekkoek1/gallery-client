@@ -67,9 +67,7 @@ export default function MyGallery() {
               to={{
                 pathname: `/artwork/${artwork.id}`,
                 //@ts-ignore
-                props: {
-                  link: artwork._links.self.href,
-                },
+                search: `?apiArtworkLink=${artwork._links.self.href}`,
               }}
             >
               <Card style={{ width: "200px", height: "330px" }}>

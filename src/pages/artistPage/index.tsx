@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Card, CardDeck, Jumbotron } from "react-bootstrap";
-import { Link, Route, useParams } from "react-router-dom";
+import { Link, Route, RouteProps, useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
 
 export type Props = {
@@ -45,10 +45,10 @@ export type Artwork = {
   };
 };
 
-export default function ArtistPage(props: Props) {
-  const apiArtistLink = props.location.props.link;
+export default function ArtistPage(props: RouteProps) {
+  const params = new URLSearchParams(props?.location?.search);
+  const apiArtistLink = params.get("apiArtistLink");
   const route_params: RouteParams = useParams();
-  console.log("route", route_params);
 
   const [artistData, setArtistData] = useState<Partial<ArtistData>>({});
   const [artworks, setArtworks] = useState([]);
@@ -102,10 +102,7 @@ export default function ArtistPage(props: Props) {
               key={artwork.id}
               to={{
                 pathname: `/artwork/${artwork.id}`,
-                //@ts-ignore
-                props: {
-                  link: artwork._links.self.href,
-                },
+                search: `?apiArtworkLink=${artwork._links.self.href}`,
               }}
             >
               <Card style={{ width: "200px", height: "330px" }}>
