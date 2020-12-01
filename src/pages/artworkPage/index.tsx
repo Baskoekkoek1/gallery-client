@@ -62,7 +62,7 @@ export default function Artwork(props: RouteProps) {
     fetchData();
   }, []);
 
-  const togglePainting = (apiID: string) => {
+  const togglePainting = (apiID: string | undefined) => {
     if (
       user.gallery.paintings.some((painting: any) => painting.apiID === apiID)
     ) {
@@ -80,7 +80,6 @@ export default function Artwork(props: RouteProps) {
         <h3>
           <em>{artworkData?.collecting_institution}</em>
         </h3>
-        {/* @ts-ignore */}
         <button onClick={() => togglePainting(artworkData.id)}>
           {user.gallery.paintings.some(
             (painting: any) => painting.apiID === artworkData.id

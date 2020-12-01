@@ -37,12 +37,7 @@ export default function MyGallery() {
         const dataResponse = response.data;
         const newPaintings = [...artworks, dataResponse];
         console.log("newPaintings", newPaintings);
-        //@ts-ignore
-        if (artworks.includes(artwork.id)) {
-          return;
-        } else {
-          setArtworks((artworks) => [...artworks, dataResponse]);
-        }
+        setArtworks((artworks) => [...artworks, dataResponse]);
       }
       fetchArtwork();
     });
@@ -66,7 +61,6 @@ export default function MyGallery() {
               key={artwork.id}
               to={{
                 pathname: `/artwork/${artwork.id}`,
-                //@ts-ignore
                 search: `?apiArtworkLink=${artwork._links.self.href}`,
               }}
             >

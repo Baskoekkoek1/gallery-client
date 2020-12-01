@@ -88,7 +88,7 @@ const signUp = (name: string, email: string, password: string) => {
 
 const userLogOut = () => ({ type: "LOG_OUT" });
 
-export function addPainting(apiID: string) {
+export function addPainting(apiID: string | undefined) {
   return async function thunk(dispatch: Function, getState: Function) {
     const { gallery, token } = selectUser(getState());
 
@@ -130,7 +130,10 @@ export const getUserWithStoredToken = () => {
   };
 };
 
-export function deletePainting(paintingId: string, galleryId: number) {
+export function deletePainting(
+  paintingId: string | undefined,
+  galleryId: number
+) {
   return async function thunk(dispatch: Function, getState: Function) {
     const { token } = selectUser(getState());
     try {

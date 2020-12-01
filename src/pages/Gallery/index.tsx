@@ -43,17 +43,11 @@ export default function Gallery() {
         const dataResponse = response.data;
         const newPaintings = [...artworks, dataResponse];
         console.log("newPaintings", newPaintings);
-        //@ts-ignore
-        if (artworks.includes(artwork.id)) {
-          return;
-        } else {
-          setArtworks((artworks) => [...artworks, dataResponse]);
-        }
+        setArtworks((artworks) => [...artworks, dataResponse]);
       }
       fetchArtwork();
     });
   }
-  // console.log("artworks", artworks);
   return (
     <div>
       <Jumbotron>
@@ -67,10 +61,7 @@ export default function Gallery() {
               key={artwork.id}
               to={{
                 pathname: `/artwork/${artwork.id}`,
-                //@ts-ignore
-                props: {
-                  link: artwork._links.self.href,
-                },
+                search: `?apiArtworkLink=${artwork._links.self.href}`,
               }}
             >
               <Card style={{ width: "200px", height: "330px" }}>
