@@ -7,6 +7,10 @@ import { apiUrl } from "../../config/constants";
 import { Card, CardDeck } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+export type Result = {
+  type: string;
+};
+
 export default function Artists() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
@@ -19,8 +23,9 @@ export default function Artists() {
       //   console.log("response", response.data._embedded.results);
       const results = response?.data._embedded.results;
       //   console.log(results);
-      //@ts-ignore
-      const filteredResults = results.filter((res) => res.type === "artist");
+      const filteredResults = results.filter(
+        (res: Result) => res.type === "artist"
+      );
       console.log(filteredResults);
       setResults(filteredResults);
     }
