@@ -1,6 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
-import { selectUser } from "./selectors";
+import { selectToken, selectUser } from "./selectors";
 
 export type UserWithToken = {
   createdAt: string;
@@ -10,7 +10,7 @@ export type UserWithToken = {
   token: string;
   updatedAt: string;
 };
-export type Painting = { apiID: string };
+export type Painting = { apiID: string; id: number };
 
 export type GalleryResponse = {
   id: number;
@@ -25,6 +25,11 @@ const loginSuccess = (userWithToken: UserWithToken) => {
     payload: userWithToken,
   };
 };
+
+const tokenStillValid = (userWithoutToken: any) => ({
+  type: "TOKEN_STILL_VALID",
+  payload: userWithoutToken,
+});
 
 const addPaintingSuccess = (data: Painting) => {
   return {
@@ -83,7 +88,7 @@ const signUp = (name: string, email: string, password: string) => {
 
 const userLogOut = () => ({ type: "LOG_OUT" });
 
-export function addPainting(apiID: string) {
+export function addPainting(apiID: string | undefined) {
   return async function thunk(dispatch: Function, getState: Function) {
     const { gallery, token } = selectUser(getState());
 
@@ -103,7 +108,32 @@ export function addPainting(apiID: string) {
   };
 }
 
-export function deletePainting(paintingId: string, galleryId: number) {
+export const getUserWithStoredToken = () => {
+  return async (dispatch: Function, getState: Function) => {
+    const token = selectToken(getState());
+
+    if (token === null) return;
+
+    try {
+      const response = await axios.get(`${apiUrl}/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      dispatch(tokenStillValid(response.data));
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.message);
+      } else {
+        console.log(error);
+      }
+      dispatch(userLogOut());
+    }
+  };
+};
+
+export function deletePainting(
+  paintingId: string | undefined,
+  galleryId: number
+) {
   return async function thunk(dispatch: Function, getState: Function) {
     const { token } = selectUser(getState());
     try {

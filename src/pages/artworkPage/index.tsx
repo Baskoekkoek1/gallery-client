@@ -2,15 +2,15 @@ import axios from "axios";
 import React, { MouseEvent, useEffect, useState } from "react";
 import { Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { RouteProps, useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
-import { addPainting, deletePainting } from "../../store/user/actions";
+import {
+  addPainting,
+  deletePainting,
+  Painting,
+} from "../../store/user/actions";
 import { selectUser } from "../../store/user/selectors";
 import { RouteParams } from "../../pages/artistPage/index";
-
-export type Painting = {
-  apiID: string;
-};
 
 export type ArtworkData = {
   title: string;
@@ -26,15 +26,23 @@ export type ArtworkData = {
 export type User = {
   gallery: {
     id: number;
-    paintings: object[];
+    paintings: Painting[];
   };
 };
 
-//@ts-ignore
-export default function Artwork(props) {
+// export type Props = {
+//   location: {
+//     props: {
+//       link: string;
+//     };
+//   };
+// };
+
+export default function Artwork(props: RouteProps) {
   const dispatch = useDispatch();
-  const apiArtworkLink = props.location.props.link;
-  console.log(apiArtworkLink);
+  const params = new URLSearchParams(props?.location?.search);
+  const apiArtworkLink = params.get("apiArtworkLink");
+
   const route_params: RouteParams = useParams();
   const [artworkData, setArtworkData] = useState<Partial<ArtworkData>>({});
   const user: User = useSelector(selectUser);
@@ -54,13 +62,9 @@ export default function Artwork(props) {
     fetchData();
   }, []);
 
-  //@ts-ignore
-  const togglePainting = (apiID) => {
+  const togglePainting = (apiID: string | undefined) => {
     if (
-      user.gallery.paintings.some(
-        //@ts-ignore
-        (painting: Painting) => painting.apiID === apiID
-      )
+      user.gallery.paintings.some((painting: any) => painting.apiID === apiID)
     ) {
       dispatch(deletePainting(apiID, galleryId));
     } else {
@@ -78,8 +82,7 @@ export default function Artwork(props) {
         </h3>
         <button onClick={() => togglePainting(artworkData.id)}>
           {user.gallery.paintings.some(
-            //@ts-ignore
-            (painting: Painting) => painting.apiID === artworkData.id
+            (painting: any) => painting.apiID === artworkData.id
           )
             ? "Remove from my gallery"
             : "Add to my gallery"}

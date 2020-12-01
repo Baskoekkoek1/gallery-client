@@ -1,8 +1,10 @@
+import { Painting } from "../../pages/artworkPage";
+
 export type State = {
   galleries: {
     all_galleries: Object[];
     selected_gallery: {
-      paintings: Object[];
+      paintings: Painting[];
       title: string;
       description: string;
     };

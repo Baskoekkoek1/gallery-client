@@ -17,6 +17,7 @@ const initialState: State = {
 type Action =
   | { type: "LOGIN_SUCCESS"; payload: UserWithToken }
   | { type: "LOG_OUT"; payload: null }
+  | { type: "TOKEN_STILL_VALID"; payload: any }
   | { type: "ADD_PAINTING_SUCCESS"; payload: Painting }
   | { type: "DELETE_PAINTING_SUCCESS"; payload: Painting }
   | { type: "GALLERY_UPDATED"; payload: GalleryResponse };
@@ -43,6 +44,10 @@ export default (state: State = initialState, action: Action) => {
     case "LOG_OUT":
       localStorage.removeItem("token");
       return { ...initialState, token: null };
+
+    case "TOKEN_STILL_VALID":
+      return { ...state, ...action.payload };
+
     case "ADD_PAINTING_SUCCESS":
       return {
         ...state,
@@ -55,8 +60,7 @@ export default (state: State = initialState, action: Action) => {
       console.log("CALLED");
       const paintingId = action.payload.apiID;
       const newPaintings = state.gallery.paintings.filter(
-        //@ts-ignore
-        (painting: Painting) => painting.apiID !== paintingId
+        (painting: any) => painting.apiID !== paintingId
       );
       console.log("newPaintings", newPaintings);
       return {

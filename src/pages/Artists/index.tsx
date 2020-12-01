@@ -58,10 +58,7 @@ export default function Artists() {
               key={index}
               to={{
                 pathname: `/artists/${res.title}`,
-                //@ts-ignore
-                props: {
-                  link: res._links.self.href,
-                },
+                search: `?apiArtistLink=${res._links.self.href}`,
               }}
             >
               <Card style={{ width: "200px", height: "330px" }}>

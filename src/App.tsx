@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import SignUp from "../src/pages/SignUp";
 import Login from "../src/pages/Login";
@@ -10,8 +10,16 @@ import Artwork from "./pages/artworkPage";
 import Galleries from "./pages/Galleries";
 import Gallery from "./pages/Gallery";
 import MyGallery from "./pages/MyGallery/MyGallery";
+import { useDispatch } from "react-redux";
+import { getUserWithStoredToken } from "./store/user/actions";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserWithStoredToken());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <Navigation />
