@@ -1,30 +1,57 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Card, CardDeck, Jumbotron } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
-import { clearLine } from "readline";
+import { Link, Route, useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
-//@ts-ignore
-export default function ArtistPage(props) {
+
+export type Props = {
+  location: {
+    props: {
+      link: string;
+    };
+  };
+};
+
+export type ArtistData = {
+  name: string;
+  birthday: string;
+  deathday: string;
+  biography: string;
+  _links: {
+    artworks: {
+      href: string;
+    };
+    thumbnail: {
+      href: string;
+    };
+  };
+};
+
+export type RouteParams = {
+  name: string;
+  id: string;
+};
+
+export type Artwork = {
+  id: string;
+  title: string;
+  _links: {
+    thumbnail: {
+      href: string;
+    };
+    self: {
+      href: string;
+    };
+  };
+};
+
+export default function ArtistPage(props: Props) {
   const apiArtistLink = props.location.props.link;
-  const route_params = useParams();
-  //@ts-ignore
-  //   console.log("route", route_params.name);
+  const route_params: RouteParams = useParams();
+  console.log("route", route_params);
 
-  // type ArtistData = {
-  //   name: string;
-  //   birthday: string;
-  //   deathday: string;
-  //   _links: {
-  //     thumbnail:{
-  //       href:string;
-  //     }
-  //   }
-  // }
-
-  const [artistData, setArtistData] = useState({});
+  const [artistData, setArtistData] = useState<Partial<ArtistData>>({});
   const [artworks, setArtworks] = useState([]);
-  //@ts-ignore
   const apiArtworksLink = artistData?._links?.artworks.href;
 
   useEffect(() => {
@@ -35,19 +62,16 @@ export default function ArtistPage(props) {
   }, []);
 
   async function fetchData() {
-    //@ts-ignore
     const response = await axios.get(`${apiUrl}/artists/${route_params.name}`, {
       params: { apiArtistUrl: apiArtistLink },
     });
-    // console.log("response", response.data);
+    console.log("ARTISTdata", response.data);
     setArtistData(response.data);
     const apiArtworksLink = response.data?._links?.artworks.href;
     await fetchArtworks(apiArtworksLink);
   }
-  //@ts-ignore
-  async function fetchArtworks(link) {
+  async function fetchArtworks(link: string) {
     const response = await axios.get(
-      //@ts-ignore
       `${apiUrl}/artists/${route_params.name}/artworks`,
       {
         params: { apiArtworksUrl: link },
@@ -64,21 +88,15 @@ export default function ArtistPage(props) {
     <div>
       <Jumbotron>
         <h1>
-          {/* 
-  // @ts-ignore */}
           {artistData?.name} {artistData?.birthday} - {artistData?.deathday}
         </h1>
-        {/* 
-  // @ts-ignore */}
         <img src={artistData?._links?.thumbnail?.href} />
         <div>
-          {/* 
-  // @ts-ignore */}
           <p>{artistData?.biography}</p>
         </div>
       </Jumbotron>
       <CardDeck>
-        {artworks?.map((artwork: any) => {
+        {artworks?.map((artwork: Artwork) => {
           return (
             <Link
               key={artwork.id}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Jumbotron } from "react-bootstrap";
+import { Card, CardDeck, Container, Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchOneGallery } from "../../store/galleries/actions";
 import {
   selectOneGallery,
@@ -17,12 +17,15 @@ export type Artwork = {
     thumbnail: {
       href: string;
     };
+    self: {
+      href: string;
+    };
   };
 };
 
 export default function Gallery() {
   const dispatch = useDispatch();
-  // const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState([]);
 
   const thisGallery = useSelector(selectOneGallery);
   const all_artworks: Object[] = useSelector(selectPaintings);
@@ -34,31 +37,39 @@ export default function Gallery() {
 
   useEffect(() => {
     dispatch(fetchOneGallery(parseInt(id)));
-    // async function dataFetch() {
-    //   await getArtworks();
-    // }
-    // getArtworks();
-  }, [dispatch]);
+    async function dataFetch() {
+      await getArtworks();
+    }
+    dataFetch();
+    //@ts-ignore
+  }, [dispatch, all_artworks?.[0].id]);
 
-  // async function getArtworks() {
-  //   console.log("CALLED");
-  //   all_artworks?.map((artwork) => {
-  //     async function fetchArtwork() {
-  //       const response = await axios.get(`${apiUrl}/galleries/${id}/artwork`, {
-  //         params: {
-  //           //@ts-ignore
-  //           apiArtworkUrl: `https://api.artsy.net/api/artworks/${artwork.apiID}`,
-  //         },
-  //       });
-  //       console.log("response", response);
-  //       //@ts-ignore
-  //       setArtworks(response.data);
-  //     }
-  //     fetchArtwork();
-  //   });
-  // }
-  // console.log("artworks", artworks);
+  async function getArtworks() {
+    // console.log("CALLED");
+    all_artworks?.map((artwork) => {
+      async function fetchArtwork() {
+        const response = await axios.get(`${apiUrl}/galleries/${id}/artwork`, {
+          params: {
+            //@ts-ignore
+            apiArtworkUrl: `https://api.artsy.net/api/artworks/${artwork.apiID}`,
+          },
+        });
+        console.log("response", response);
+        const dataResponse = response.data;
+        const newPaintings = [...artworks, dataResponse];
+        console.log("newPaintings", newPaintings);
+        //@ts-ignore
 
+        if (artworks.includes(artwork.id)) {
+          return;
+        } else {
+          //@ts-ignore
+          setArtworks((artworks) => [...artworks, dataResponse]);
+        }
+      }
+      fetchArtwork();
+    });
+  }
   // console.log("artworks", artworks);
   return (
     <div>
@@ -66,15 +77,34 @@ export default function Gallery() {
         <h1>{thisGallery?.title}</h1>
         <p>{thisGallery?.description}</p>
       </Jumbotron>
-      {/* {!artworks ? (
-        <h1>LOADING</h1>
-      ) : (
-        artworks.map((artwork: Artwork) => {
+      <CardDeck>
+        {artworks?.map((artwork: Artwork) => {
           return (
-            <img key={artwork.id} src={artwork._links.thumbnail.href}></img>
+            <Link
+              key={artwork.id}
+              to={{
+                pathname: `/artwork/${artwork.id}`,
+                //@ts-ignore
+                props: {
+                  link: artwork._links.self.href,
+                },
+              }}
+            >
+              <Card style={{ width: "200px", height: "330px" }}>
+                <Card.Img
+                  src={artwork._links.thumbnail.href}
+                  variant="top"
+                  style={{ width: "200px" }}
+                />
+                <Card.Body>
+                  {/* @ts-ignore */}
+                  <Card.Title>{artwork.title}</Card.Title>
+                </Card.Body>
+              </Card>
+            </Link>
           );
-        })
-      )} */}
+        })}
+      </CardDeck>
     </div>
   );
 }

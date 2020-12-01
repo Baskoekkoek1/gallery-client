@@ -1,9 +1,17 @@
 import { UserWithToken, Painting } from "./actions";
 
-const initialState = {
+const initialState: State = {
   token: localStorage.getItem("token"),
   name: null,
   email: null,
+  id: null,
+  gallery: {
+    id: null,
+    title: null,
+    description: null,
+    userId: null,
+    paintings: [],
+  },
 };
 
 type Action =
@@ -12,7 +20,21 @@ type Action =
   | { type: "ADD_PAINTING_SUCCESS"; payload: Painting }
   | { type: "DELETE_PAINTING_SUCCESS"; payload: Painting };
 
-export default (state = initialState, action: Action) => {
+type State = {
+  token: string | null;
+  name: string | null;
+  email: string | null;
+  id: number | null;
+  gallery: {
+    id: number | null;
+    title: string | null;
+    description: string | null;
+    userId: number | null;
+    paintings: object[];
+  };
+};
+
+export default (state: State = initialState, action: Action) => {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       localStorage.setItem("token", action.payload.token);
@@ -24,23 +46,20 @@ export default (state = initialState, action: Action) => {
       return {
         ...state,
         gallery: {
-          //@ts-ignore
           ...state.gallery,
-          //@ts-ignore
           paintings: [...state.gallery.paintings, action.payload],
         },
       };
     case "DELETE_PAINTING_SUCCESS":
       console.log("CALLED");
       const paintingId = action.payload.apiID;
-      //@ts-ignore
       const newPaintings = state.gallery.paintings.filter(
+        //@ts-ignore
         (painting: Painting) => painting.apiID !== paintingId
       );
       console.log("newPaintings", newPaintings);
       return {
         ...state,
-        //@ts-ignore
         gallery: { ...state.gallery, paintings: newPaintings },
       };
     default:

@@ -5,6 +5,15 @@ import { Link } from "react-router-dom";
 import { fetchGalleries } from "../../store/galleries/actions";
 import { selectAllGalleries } from "../../store/galleries/selectors";
 
+export type Gallery = {
+  id: number;
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+};
+
 export default function Galleries() {
   const dispatch = useDispatch();
 
@@ -14,18 +23,11 @@ export default function Galleries() {
 
   const allGalleries = useSelector(selectAllGalleries);
 
-  type Gallery = {
-    id: number;
-    title: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    userId: number;
-  };
-
   return (
     <div>
       <h1>All Galleries will be here!</h1>
+      {/*/
+      //@ts-ignore/*/}
       {allGalleries.map((gallery: Gallery) => {
         return (
           <CardDeck key={gallery.id}>

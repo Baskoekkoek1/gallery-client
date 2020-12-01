@@ -1,9 +1,21 @@
-//@ts-ignore
-export const selectAllGalleries = (state) => state.galleries.all_galleries;
-//@ts-ignore
-export const selectOneGallery = (state) => state.galleries.selected_gallery;
-//@ts-ignore
-export const selectPaintings = (state) =>
+export type State = {
+  galleries: {
+    all_galleries: Object[];
+    selected_gallery: {
+      paintings: Object[];
+      title: string;
+      description: string;
+    };
+  };
+};
+
+export const selectAllGalleries = (state: State) =>
+  state.galleries.all_galleries;
+
+export const selectOneGallery = (state: State) =>
+  state.galleries.selected_gallery;
+
+export const selectPaintings = (state: State) =>
   state.galleries.selected_gallery?.paintings;
 
 export {};
