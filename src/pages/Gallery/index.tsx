@@ -29,7 +29,7 @@ export default function Gallery() {
       await getArtworks();
     }
     dataFetch();
-  }, [dispatch, all_artworks?.[0].id]);
+  }, [dispatch, all_artworks?.[0]?.id]);
 
   async function getArtworks() {
     all_artworks?.forEach((artwork) => {
