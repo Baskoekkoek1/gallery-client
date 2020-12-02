@@ -7,7 +7,7 @@ import { Button, Card, CardDeck, Jumbotron } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Artwork } from "../artistPage";
 import EditGalleryForm from "./EditGalleryForm";
-import { Painting } from "../../store/user/actions";
+import { Painting } from "../../store/user/types";
 
 export default function MyGallery() {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
@@ -64,7 +64,11 @@ export default function MyGallery() {
                 search: `?apiArtworkLink=${artwork._links.self.href}`,
               }}
             >
-              <Card style={{ width: "200px", height: "330px" }}>
+              <Card
+                bg="dark"
+                text="white"
+                style={{ width: "200px", height: "330px" }}
+              >
                 <Card.Img
                   src={artwork._links.thumbnail.href}
                   variant="top"

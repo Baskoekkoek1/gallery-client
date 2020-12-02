@@ -61,7 +61,11 @@ export default function Artists() {
                 search: `?apiArtistLink=${res._links.self.href}`,
               }}
             >
-              <Card style={{ width: "200px", height: "330px" }}>
+              <Card
+                bg="dark"
+                text="white"
+                style={{ width: "200px", height: "330px" }}
+              >
                 <Card.Img variant="top" src={res._links.thumbnail.href} />
                 <Card.Body>
                   <Card.Title>{res.title}</Card.Title>

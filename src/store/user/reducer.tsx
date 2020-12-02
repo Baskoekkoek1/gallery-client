@@ -1,4 +1,4 @@
-import { UserWithToken, Painting, GalleryResponse } from "./actions";
+import { UserWithToken, Painting, GalleryResponse } from "./types";
 
 const initialState: State = {
   token: localStorage.getItem("token"),

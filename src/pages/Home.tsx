@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Card, CardDeck } from "react-bootstrap";
+import { Button, Card, CardDeck, Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiUrl } from "../config/constants";
@@ -18,7 +18,7 @@ export default function Home() {
 
   async function fetchData() {
     const response = await axios.get(`${apiUrl}/artworks`, {
-      params: { apiArtworksUrl: `https://api.artsy.net/api/artworks?size=10` },
+      params: { apiArtworksUrl: `https://api.artsy.net/api/artworks?size=12` },
     });
     setArtworks(response.data._embedded.artworks);
   }
@@ -26,7 +26,7 @@ export default function Home() {
   async function fetchMoreData() {
     const response = await axios.get(`${apiUrl}/artworks`, {
       params: {
-        apiArtworksUrl: `https://api.artsy.net/api/artworks?size=10&offset=${artworks.length}`,
+        apiArtworksUrl: `https://api.artsy.net/api/artworks?size=12&offset=${artworks.length}`,
       },
     });
     const newArtworks = response.data._embedded.artworks;
@@ -35,8 +35,13 @@ export default function Home() {
   console.log("HOW MANY?", artworks);
   return (
     <div>
-      <h1>Home</h1>
-      <h2>Welcome, {user.name}</h2>
+      <Jumbotron>
+        <h1>Home</h1>
+        <h2>Welcome, {user.name ? user.name : " stranger!"}</h2>
+        <br />
+        <br />
+        <h6>Browse paitings or click Artists to search by artist.</h6>
+      </Jumbotron>
       <CardDeck>
         {artworks?.map((artwork: Artwork) => {
           return (
@@ -47,7 +52,11 @@ export default function Home() {
                 search: `?apiArtworkLink=${artwork?._links?.self.href}`,
               }}
             >
-              <Card style={{ width: "200px", height: "330px" }}>
+              <Card
+                bg="dark"
+                text="white"
+                style={{ width: "200px", height: "330px" }}
+              >
                 <Card.Img
                   src={artwork?._links?.thumbnail?.href}
                   variant="top"
@@ -62,7 +71,11 @@ export default function Home() {
           );
         })}
       </CardDeck>
+      <br />
+      <br />
       <Button onClick={fetchMoreData}>Load more...</Button>
+      <br />
+      <br />
     </div>
   );
 }

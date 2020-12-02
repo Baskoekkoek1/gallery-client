@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, CardDeck } from "react-bootstrap";
+import { Card, CardDeck, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchGalleries } from "../../store/galleries/actions";
@@ -25,22 +25,26 @@ export default function Galleries() {
 
   return (
     <div>
-      <h1>All Galleries will be here!</h1>
-      {allGalleries.map((gallery: any) => {
-        return (
-          <CardDeck key={gallery.id}>
+      <h1>All Galleries</h1>
+      <CardDeck>
+        {allGalleries.map((gallery: any) => {
+          return (
             <Link
               key={gallery.id}
               to={{ pathname: `/galleries/${gallery.id}` }}
             >
-              <Card>
-                <h4>{gallery.title}</h4>
-                <p>{gallery.description}</p>
+              <Card bg="dark" text="white" style={{ width: "400px" }}>
+                <Card.Title>
+                  <h4>{gallery.title}</h4>
+                </Card.Title>
+                <Card.Body>
+                  <p>{gallery.description}</p>
+                </Card.Body>
               </Card>
             </Link>
-          </CardDeck>
-        );
-      })}
+          );
+        })}
+      </CardDeck>
     </div>
   );
 }

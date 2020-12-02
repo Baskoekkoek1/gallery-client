@@ -1,4 +1,4 @@
-import { Painting } from "./actions";
+import { Painting } from "./types";
 
 type State = {
   user: {

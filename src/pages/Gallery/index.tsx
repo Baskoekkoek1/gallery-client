@@ -10,7 +10,7 @@ import {
 } from "../../store/galleries/selectors";
 import { apiUrl } from "../../config/constants";
 import { Artwork } from "../../store/galleries/types";
-import { Painting } from "../../store/user/actions";
+import { Painting } from "../../store/user/types";
 
 export default function Gallery() {
   const dispatch = useDispatch();
@@ -64,7 +64,11 @@ export default function Gallery() {
                 search: `?apiArtworkLink=${artwork._links.self.href}`,
               }}
             >
-              <Card style={{ width: "200px", height: "330px" }}>
+              <Card
+                bg="dark"
+                text="white"
+                style={{ width: "200px", height: "330px" }}
+              >
                 <Card.Img
                   src={artwork._links.thumbnail.href}
                   variant="top"

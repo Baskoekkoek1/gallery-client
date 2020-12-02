@@ -1,17 +1,13 @@
 import axios from "axios";
-import React, { MouseEvent, useEffect, useState } from "react";
-import { Col, Container, Jumbotron, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Container, Jumbotron, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, RouteProps, useParams } from "react-router-dom";
+import { Link, RouteProps, useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
-import {
-  addPainting,
-  deletePainting,
-  Painting,
-} from "../../store/user/actions";
+import { addPainting, deletePainting } from "../../store/user/actions";
+import { Painting } from "../../store/user/types";
 import { selectUser } from "../../store/user/selectors";
 import { RouteParams } from "../../pages/artistPage/index";
-import { createBootstrapComponent } from "react-bootstrap/esm/ThemeProvider";
 
 export type ArtworkData = {
   title: string;
@@ -88,7 +84,7 @@ export default function Artwork(props: RouteProps) {
   };
 
   const imageLink = artworkData?._links?.image.href;
-  const largeImgLink = imageLink?.replace("{image_version}", "large");
+  const largeImgLink = imageLink?.replace("{image_version}", "larger");
 
   console.log("largeImgLink", largeImgLink);
 
@@ -98,13 +94,13 @@ export default function Artwork(props: RouteProps) {
       <Jumbotron>
         <h1>{artworkData?.title}</h1>
         {user.name ? (
-          <button onClick={() => togglePainting(artworkData.id)}>
+          <Button onClick={() => togglePainting(artworkData.id)}>
             {user.gallery.paintings.some(
               (painting: any) => painting.apiID === artworkData.id
             )
               ? "Remove from my gallery"
               : "Add to my gallery"}
-          </button>
+          </Button>
         ) : (
           <Link to="/login/">
             <button>Login to add paintings to your gallery</button>
@@ -124,8 +120,6 @@ export default function Artwork(props: RouteProps) {
                   : "unknown"}
               </em>
             </p>
-          </Col>
-          <Col>
             <p>
               <strong>Date:</strong> {artworkData.date} <br />
               <strong>Medium:</strong> {artworkData.medium} <br />
@@ -135,6 +129,7 @@ export default function Artwork(props: RouteProps) {
               <em>{artworkData.collecting_institution}</em>
             </p>
           </Col>
+          <Col></Col>
         </Row>
       </Container>
     </div>

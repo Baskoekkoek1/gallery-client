@@ -1,23 +1,7 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
 import { selectToken, selectUser } from "./selectors";
-
-export type UserWithToken = {
-  createdAt: string;
-  email: string;
-  id: number;
-  name: string;
-  token: string;
-  updatedAt: string;
-};
-export type Painting = { apiID: string; id: number };
-
-export type GalleryResponse = {
-  id: number;
-  title: string;
-  desription: string;
-  userId: number;
-};
+import { UserWithToken, Painting, GalleryResponse } from "./types";
 
 const loginSuccess = (userWithToken: UserWithToken) => {
   return {
