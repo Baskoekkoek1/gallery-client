@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Card, CardDeck, Jumbotron } from "react-bootstrap";
+import { Card, CardDeck, Container, Jumbotron } from "react-bootstrap";
 import { Link, Route, RouteProps, useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
 
@@ -68,7 +68,8 @@ export default function ArtistPage(props: RouteProps) {
     console.log("ARTISTdata", response.data);
     setArtistData(response.data);
     const apiArtworksLink = response.data?._links?.artworks.href;
-    await fetchArtworks(apiArtworksLink);
+    const apiArtworksLinkMore = apiArtworksLink.concat("&size=1000");
+    await fetchArtworks(apiArtworksLinkMore);
   }
   async function fetchArtworks(link: string) {
     const response = await axios.get(
@@ -82,7 +83,7 @@ export default function ArtistPage(props: RouteProps) {
   }
 
   // console.log("artistData", artistData);
-  // console.log("artworks", artworks);
+  console.log("artworks", artworks);
 
   return (
     <div>
@@ -96,28 +97,37 @@ export default function ArtistPage(props: RouteProps) {
         </div>
       </Jumbotron>
       <CardDeck>
-        {artworks?.map((artwork: Artwork) => {
-          return (
-            <Link
-              key={artwork.id}
-              to={{
-                pathname: `/artwork/${artwork.id}`,
-                search: `?apiArtworkLink=${artwork._links.self.href}`,
-              }}
-            >
-              <Card style={{ width: "200px", height: "330px" }}>
-                <Card.Img
-                  src={artwork._links.thumbnail.href}
-                  variant="top"
-                  style={{ width: "200px" }}
-                />
-                <Card.Body>
-                  <Card.Title>{artwork.title}</Card.Title>
-                </Card.Body>
-              </Card>
-            </Link>
-          );
-        })}
+        {artworks.length > 1 ? (
+          artworks.map((artwork: Artwork) => {
+            return (
+              <Link
+                key={artwork.id}
+                to={{
+                  pathname: `/artwork/${artwork.id}`,
+                  search: `?apiArtworkLink=${artwork._links.self.href}`,
+                }}
+              >
+                <Card style={{ width: "200px", height: "330px" }}>
+                  <Card.Img
+                    src={artwork._links.thumbnail.href}
+                    variant="top"
+                    className="img-fluid"
+                    style={{ width: "200px", maxHeight: "220px" }}
+                  />
+                  <Card.Body>
+                    <Card.Title>{artwork.title}</Card.Title>
+                  </Card.Body>
+                </Card>
+              </Link>
+            );
+          })
+        ) : (
+          <Card>
+            <Card.Title>
+              Sorry, we do not have any artworks of this artist yet.
+            </Card.Title>
+          </Card>
+        )}
       </CardDeck>
     </div>
   );
