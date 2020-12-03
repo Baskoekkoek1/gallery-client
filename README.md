@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+# Gallery - Become an artcollector without ever spending any monney
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is this app about?
 
-## Available Scripts
+Gallery is about art. You as a user can browse through artworks on the homepage, look a the details on a specific work of art (including high-resolution imgagery), create a collection of your own and share this collection with others. A visitor can browse the paintings on the homepage or search for artists in the searchbar, even without signing up for an account.
 
-In the project directory, you can run:
+## What technologies and concepts are used in this project?
 
-### `npm start`
+- React
+- Redux
+- React-Bootstrap
+- Authentication
+- Express
+- Sequelize
+- Typescript
+- [Artsy API](https://developers.artsy.net/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## What were the goals for this project?
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+After the [Codaisseur](https://codaisseur.com/courses/academy/) Full stack JavaScript Academy this project is meant to practice all I have learned in the past months in two weeks by building a full-stack app. In this project I have used Typescript, which was a completely new technology to me.
 
-### `npm test`
+- Practice Full-Stack app development
+- Explore some new technology
+- Showcase development skills
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## User Stories
 
-### `npm run build`
+1. As a user I want to be able to sign up
+2. As a user I want to be able to login using email and password
+3. As a user I want a new gallery to be created for me on sign up
+4. As a user I want to browse paintings on the homepage.
+5. As a user I want to see all available paintings from one artist on a page
+6. As a user I want to be able to search for an artist by name
+7. As a user I want to browse other users galleries
+8. As a user I want to be able to add artworks to my gallery when browsing either on the homepage or other users galleries
+9. As a user I want to view details about a painting
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project board
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+[Project board](https://github.com/users/Baskoekkoek1/projects/2)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Wireframe
 
-### `npm run eject`
+[Wireframe](https://wireframepro.mockflow.com/editor.jsp?editor=off&publicid=M04ea196fd91746640129ad66ea4fc8e31606144210273&projectid=M23e12a879eadad334be0c7ee1df3d4da1606122809692&perm=Owner#/page/e8e431fa40c3497caa03fcf2e28fc637)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Database Diagram
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[Database Diagram](https://dbdiagram.io/d/5fbbd1823a78976d7b7d12c8)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Backend Repo
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The backend of this project consists of an Express server while using sequelize to manage the Postgres database. [Backend Repo](https://github.com/Baskoekkoek1/gallery-server)
