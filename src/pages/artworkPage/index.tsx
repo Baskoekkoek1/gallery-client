@@ -69,6 +69,7 @@ export default function Artwork(props: RouteProps) {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const togglePainting = (apiID: string | undefined) => {
@@ -86,9 +87,6 @@ export default function Artwork(props: RouteProps) {
   const imageLink = artworkData?._links?.image.href;
   const largeImgLink = imageLink?.replace("{image_version}", "larger");
 
-  console.log("largeImgLink", largeImgLink);
-
-  console.log("artworkData", artworkData);
   return (
     <div>
       <Jumbotron>
@@ -111,7 +109,7 @@ export default function Artwork(props: RouteProps) {
         <Row className="align-items-center">
           <Col></Col>
           <Col>
-            <img src={largeImgLink}></img>
+            <img src={largeImgLink} alt="large artwork"></img>
             <p>
               <em>
                 Image:{" "}

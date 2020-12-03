@@ -20,13 +20,10 @@ export default function Artists() {
       const response = await axios.get(`${apiUrl}/artists`, {
         params: { searchTerm: searchTerm },
       });
-      //   console.log("response", response.data._embedded.results);
       const results = response?.data._embedded.results;
-      //   console.log(results);
       const filteredResults = results.filter(
         (res: Result) => res.type === "artist"
       );
-      console.log(filteredResults);
       setResults(filteredResults);
     }
     fetchData();

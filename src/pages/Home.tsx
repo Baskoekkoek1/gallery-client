@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card, CardDeck, Jumbotron } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiUrl } from "../config/constants";
-import { userLogOut } from "../store/user/actions";
 import { selectUser } from "../store/user/selectors";
 import { Artwork } from "./artistPage";
+import "./custom.scss";
 
 export default function Home() {
   const user = useSelector(selectUser);
@@ -32,15 +32,16 @@ export default function Home() {
     const newArtworks = response.data._embedded.artworks;
     setArtworks(artworks.concat(newArtworks));
   }
-  console.log("HOW MANY?", artworks);
   return (
     <div>
       <Jumbotron>
-        <h1>Home</h1>
-        <h2>Welcome, {user.name ? user.name : " stranger!"}</h2>
+        <h1 className="h1">
+          Welcome to Gallery, {user.name ? user.name : " stranger!"}
+        </h1>
         <br />
-        <br />
-        <h6>Browse paitings or click Artists to search by artist.</h6>
+        <h4 className="text">
+          Where you can become an art collector, without ever spending a dime.
+        </h4>
       </Jumbotron>
       <CardDeck>
         {artworks?.map((artwork: Artwork) => {
@@ -64,7 +65,9 @@ export default function Home() {
                   style={{ width: "200px", maxHeight: "220px" }}
                 />
                 <Card.Body>
-                  <Card.Title>{artwork.title}</Card.Title>
+                  <Card.Title className="card-title">
+                    {artwork.title}
+                  </Card.Title>
                 </Card.Body>
               </Card>
             </Link>

@@ -22,7 +22,6 @@ export default function Login() {
   }, [token, history]);
 
   function submitForm(event: React.MouseEvent<HTMLInputElement>) {
-    console.log("hi");
     event.preventDefault();
 
     dispatch(userLogin(email, password));

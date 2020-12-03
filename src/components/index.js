@@ -4,9 +4,9 @@ import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectToken } from "../store/user/selectors";
-import NavbarItem from "./NavbarItem";
 import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
+import "./navbar.scss";
 
 export default function Navigation() {
   const token = useSelector(selectToken);
@@ -15,7 +15,7 @@ export default function Navigation() {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand as={NavLink} to="/">
+      <Navbar.Brand as={NavLink} to="/" className="title">
         GALLERY
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

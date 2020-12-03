@@ -36,7 +36,7 @@ type State = {
   };
 };
 
-export default (state: State = initialState, action: Action) => {
+export default function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       localStorage.setItem("token", action.payload.token);
@@ -57,12 +57,10 @@ export default (state: State = initialState, action: Action) => {
         },
       };
     case "DELETE_PAINTING_SUCCESS":
-      console.log("CALLED");
       const paintingId = action.payload.apiID;
       const newPaintings = state.gallery.paintings.filter(
         (painting: any) => painting.apiID !== paintingId
       );
-      console.log("newPaintings", newPaintings);
       return {
         ...state,
         gallery: { ...state.gallery, paintings: newPaintings },
@@ -76,4 +74,4 @@ export default (state: State = initialState, action: Action) => {
     default:
       return state;
   }
-};
+}

@@ -23,7 +23,6 @@ const addPaintingSuccess = (data: Painting) => {
 };
 
 const deletePaintingSuccess = (data: Painting) => {
-  console.log("CALLED ACTION");
   return {
     type: "DELETE_PAINTING_SUCCESS",
     payload: data,
@@ -87,7 +86,6 @@ export function addPainting(apiID: string | undefined) {
         },
       }
     );
-    // console.log("Add painting:", response.data);
     dispatch(addPaintingSuccess(response.data.painting));
   };
 }
@@ -129,9 +127,7 @@ export function deletePainting(
           },
         }
       );
-      console.log("Deleted?", response.data);
       const responsePainting = response.data.thisPainting;
-      console.log("responsePainting", responsePainting);
       dispatch(deletePaintingSuccess(responsePainting));
     } catch (error) {}
   };

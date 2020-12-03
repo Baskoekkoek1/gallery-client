@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { Card, CardDeck, Container } from "react-bootstrap";
+import { Card, CardDeck, Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchGalleries } from "../../store/galleries/actions";
 import { selectAllGalleries } from "../../store/galleries/selectors";
+import "../custom.scss";
 
 export type Gallery = {
   id: number;
@@ -25,7 +26,9 @@ export default function Galleries() {
 
   return (
     <div>
-      <h1>All Galleries</h1>
+      <Jumbotron>
+        <h1 className="h1">All Galleries</h1>
+      </Jumbotron>
       <CardDeck>
         {allGalleries.map((gallery: any) => {
           return (
@@ -34,10 +37,10 @@ export default function Galleries() {
               to={{ pathname: `/galleries/${gallery.id}` }}
             >
               <Card bg="dark" text="white" style={{ width: "400px" }}>
-                <Card.Title>
+                <Card.Title className="card-title">
                   <h4>{gallery.title}</h4>
                 </Card.Title>
-                <Card.Body>
+                <Card.Body className="text">
                   <p>{gallery.description}</p>
                 </Card.Body>
               </Card>
