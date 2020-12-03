@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, CardDeck, Container, Jumbotron } from "react-bootstrap";
+import { Card, CardDeck, Jumbotron } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { fetchOneGallery } from "../../store/galleries/actions";
@@ -10,7 +10,7 @@ import {
 } from "../../store/galleries/selectors";
 import { apiUrl } from "../../config/constants";
 import { Artwork } from "../../store/galleries/types";
-import { Painting } from "../../store/user/actions";
+import { Painting } from "../../store/user/types";
 
 export default function Gallery() {
   const dispatch = useDispatch();
@@ -22,6 +22,7 @@ export default function Gallery() {
   type Params = { id: string };
   const ROUTE_PARAMS: Params = useParams();
   const id = ROUTE_PARAMS.id;
+  const useEffectDepend = all_artworks?.[0]?.id;
 
   useEffect(() => {
     dispatch(fetchOneGallery(parseInt(id)));
@@ -29,7 +30,8 @@ export default function Gallery() {
       await getArtworks();
     }
     dataFetch();
-  }, [dispatch, all_artworks?.[0]?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, useEffectDepend]);
 
   async function getArtworks() {
     all_artworks?.forEach((artwork) => {
@@ -39,10 +41,7 @@ export default function Gallery() {
             apiArtworkUrl: `https://api.artsy.net/api/artworks/${artwork.apiID}`,
           },
         });
-        console.log("response", response);
         const dataResponse = response.data;
-        const newPaintings = [...artworks, dataResponse];
-        console.log("newPaintings", newPaintings);
         setArtworks((artworks) => [...artworks, dataResponse]);
       }
       fetchArtwork();
@@ -64,11 +63,15 @@ export default function Gallery() {
                 search: `?apiArtworkLink=${artwork._links.self.href}`,
               }}
             >
-              <Card style={{ width: "200px", height: "330px" }}>
+              <Card
+                bg="dark"
+                text="white"
+                style={{ width: "200px", height: "330px" }}
+              >
                 <Card.Img
                   src={artwork._links.thumbnail.href}
                   variant="top"
-                  style={{ width: "200px" }}
+                  style={{ width: "200px", maxHeight: "220px" }}
                 />
                 <Card.Body>
                   <Card.Title>{artwork.title}</Card.Title>

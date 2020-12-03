@@ -1,4 +1,4 @@
-import { Painting } from "../../pages/artworkPage";
+import { Painting } from "../user/types";
 
 export type State = {
   galleries: {

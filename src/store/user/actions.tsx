@@ -1,23 +1,7 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
 import { selectToken, selectUser } from "./selectors";
-
-export type UserWithToken = {
-  createdAt: string;
-  email: string;
-  id: number;
-  name: string;
-  token: string;
-  updatedAt: string;
-};
-export type Painting = { apiID: string; id: number };
-
-export type GalleryResponse = {
-  id: number;
-  title: string;
-  desription: string;
-  userId: number;
-};
+import { UserWithToken, Painting, GalleryResponse } from "./types";
 
 const loginSuccess = (userWithToken: UserWithToken) => {
   return {
@@ -39,7 +23,6 @@ const addPaintingSuccess = (data: Painting) => {
 };
 
 const deletePaintingSuccess = (data: Painting) => {
-  console.log("CALLED ACTION");
   return {
     type: "DELETE_PAINTING_SUCCESS",
     payload: data,
@@ -103,7 +86,6 @@ export function addPainting(apiID: string | undefined) {
         },
       }
     );
-    // console.log("Add painting:", response.data);
     dispatch(addPaintingSuccess(response.data.painting));
   };
 }
@@ -145,9 +127,7 @@ export function deletePainting(
           },
         }
       );
-      console.log("Deleted?", response.data);
       const responsePainting = response.data.thisPainting;
-      console.log("responsePainting", responsePainting);
       dispatch(deletePaintingSuccess(responsePainting));
     } catch (error) {}
   };

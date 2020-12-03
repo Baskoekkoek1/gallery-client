@@ -20,13 +20,10 @@ export default function Artists() {
       const response = await axios.get(`${apiUrl}/artists`, {
         params: { searchTerm: searchTerm },
       });
-      //   console.log("response", response.data._embedded.results);
       const results = response?.data._embedded.results;
-      //   console.log(results);
       const filteredResults = results.filter(
         (res: Result) => res.type === "artist"
       );
-      console.log(filteredResults);
       setResults(filteredResults);
     }
     fetchData();
@@ -61,7 +58,11 @@ export default function Artists() {
                 search: `?apiArtistLink=${res._links.self.href}`,
               }}
             >
-              <Card style={{ width: "200px", height: "330px" }}>
+              <Card
+                bg="dark"
+                text="white"
+                style={{ width: "200px", height: "330px" }}
+              >
                 <Card.Img variant="top" src={res._links.thumbnail.href} />
                 <Card.Body>
                   <Card.Title>{res.title}</Card.Title>

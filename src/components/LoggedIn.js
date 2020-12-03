@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { selectUser } from "../store/user/selectors";
 import Nav from "react-bootstrap/Nav";
 import NavbarItem from "./NavbarItem";
+import { Person } from "react-bootstrap-icons";
 
 export default function LoggedIn() {
   const dispatch = useDispatch();
@@ -14,7 +15,9 @@ export default function LoggedIn() {
       <NavbarItem path="/artists" linkText="Artists" />
       <NavbarItem path="/galleries" linkText="Galleries" />
       <NavbarItem path="/mygallery" linkText="My Gallery" />
-      <Nav.Item style={{ padding: ".5rem 1rem" }}>{user.email}</Nav.Item>
+      <Nav.Item style={{ padding: ".5rem 1rem" }}>
+        <Person /> {user.email}
+      </Nav.Item>
       <Button onClick={() => dispatch(userLogOut())}>Logout</Button>
     </>
   );

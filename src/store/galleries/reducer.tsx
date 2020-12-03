@@ -10,7 +10,7 @@ type Action =
   | { type: "GALLERIES_FETCHED"; payload: GalleriesData }
   | { type: "ONE_GALLERY_FETCHED"; payload: oneGalleryData };
 
-export default (state = initialState, action: Action) => {
+export default function reducer(state = initialState, action: Action) {
   switch (action.type) {
     case "GALLERIES_FETCHED":
       return { loading: false, all_galleries: action.payload };
@@ -19,4 +19,4 @@ export default (state = initialState, action: Action) => {
     default:
       return state;
   }
-};
+}
