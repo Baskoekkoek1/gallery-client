@@ -4,6 +4,10 @@
 
 Gallery is about art. You as a user can browse through artworks on the homepage, look a the details on a specific work of art (including high-resolution imgagery), create a collection of your own and share this collection with others. A visitor can browse the paintings on the homepage or search for artists in the searchbar, even without signing up for an account.
 
+## App Demo
+
+![App Demo Gif](https://media.giphy.com/media/YA3qE5Vjp0yBjgTUyE/giphy.gif)
+
 ## What technologies and concepts are used in this project?
 
 - React
