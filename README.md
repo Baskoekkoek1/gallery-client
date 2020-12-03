@@ -1,4 +1,4 @@
-# Gallery - Become an artcollector without ever spending any monney
+# Gallery - Where you can become an art collector, without ever spending a dime.
 
 ## What is this app about?
 
