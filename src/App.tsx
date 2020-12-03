@@ -12,6 +12,7 @@ import Gallery from "./pages/Gallery";
 import MyGallery from "./pages/MyGallery/MyGallery";
 import { useDispatch } from "react-redux";
 import { getUserWithStoredToken } from "./store/user/actions";
+import "./customRoot.scss";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="App">
+    <div className="app">
       <Navigation />
       <Switch>
         <Route exact path="/" component={Home} />
