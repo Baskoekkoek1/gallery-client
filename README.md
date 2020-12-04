@@ -45,7 +45,7 @@ After the [Codaisseur](https://codaisseur.com/courses/academy/) Full stack JavaS
 
 ## Wireframe
 
-[Wireframe](https://wireframepro.mockflow.com/editor.jsp?editor=off&publicid=M04ea196fd91746640129ad66ea4fc8e31606144210273&projectid=M23e12a879eadad334be0c7ee1df3d4da1606122809692&perm=Owner#/page/e8e431fa40c3497caa03fcf2e28fc637)
+[Wireframe](https://s3.amazonaws.com/assets.mockflow.com/app/wireframepro/company/Cd168fe03d4e579437aea4f5c0a6c2a0e/projects/M23e12a879eadad334be0c7ee1df3d4da1606122809692/pages/e8e431fa40c3497caa03fcf2e28fc637/image/e8e431fa40c3497caa03fcf2e28fc637.png)
 
 ## Database Diagram
 
