@@ -74,7 +74,11 @@ export default function MyGallery() {
                   <Card
                     bg="dark"
                     text="white"
-                    style={{ width: "200px", height: "330px" }}
+                    style={{
+                      width: "200px",
+                      height: "330px",
+                      marginBottom: "10px",
+                    }}
                   >
                     <Card.Img
                       src={artwork._links.thumbnail.href}

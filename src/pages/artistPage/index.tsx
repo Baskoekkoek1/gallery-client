@@ -111,7 +111,11 @@ export default function ArtistPage(props: RouteProps) {
                     src={artwork._links.thumbnail.href}
                     variant="top"
                     className="img-fluid"
-                    style={{ width: "200px", maxHeight: "220px" }}
+                    style={{
+                      width: "200px",
+                      maxHeight: "220px",
+                      marginBottom: "10px",
+                    }}
                   />
                   <Card.Body>
                     <Card.Title>{artwork.title}</Card.Title>

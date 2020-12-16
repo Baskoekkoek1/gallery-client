@@ -61,7 +61,11 @@ export default function Artists() {
               <Card
                 bg="dark"
                 text="white"
-                style={{ width: "200px", height: "330px" }}
+                style={{
+                  width: "200px",
+                  height: "330px",
+                  marginBottom: "10px",
+                }}
               >
                 <Card.Img variant="top" src={res._links.thumbnail.href} />
                 <Card.Body>

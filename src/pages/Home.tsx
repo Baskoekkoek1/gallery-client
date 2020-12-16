@@ -18,7 +18,11 @@ export default function Home() {
 
   async function fetchData() {
     const response = await axios.get(`${apiUrl}/artworks`, {
-      params: { apiArtworksUrl: `https://api.artsy.net/api/artworks?size=12` },
+      params: {
+        apiArtworksUrl: encodeURIComponent(
+          `https://api.artsy.net/api/artworks?size=12`
+        ),
+      },
     });
     setArtworks(response.data._embedded.artworks);
   }
@@ -26,7 +30,9 @@ export default function Home() {
   async function fetchMoreData() {
     const response = await axios.get(`${apiUrl}/artworks`, {
       params: {
-        apiArtworksUrl: `https://api.artsy.net/api/artworks?size=12&offset=${artworks.length}`,
+        apiArtworksUrl: encodeURIComponent(
+          `https://api.artsy.net/api/artworks?size=12&offset=${artworks.length}`
+        ),
       },
     });
     const newArtworks = response.data._embedded.artworks;
@@ -56,7 +62,11 @@ export default function Home() {
               <Card
                 bg="dark"
                 text="white"
-                style={{ width: "200px", height: "330px" }}
+                style={{
+                  width: "200px",
+                  height: "330px",
+                  marginBottom: "10px",
+                }}
               >
                 <Card.Img
                   src={artwork?._links?.thumbnail?.href}

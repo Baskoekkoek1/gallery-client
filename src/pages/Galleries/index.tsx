@@ -36,7 +36,11 @@ export default function Galleries() {
               key={gallery.id}
               to={{ pathname: `/galleries/${gallery.id}` }}
             >
-              <Card bg="dark" text="white" style={{ width: "400px" }}>
+              <Card
+                bg="dark"
+                text="white"
+                style={{ width: "400px", marginBottom: "10px" }}
+              >
                 <Card.Title className="card-title">
                   <h4>{gallery.title}</h4>
                 </Card.Title>
