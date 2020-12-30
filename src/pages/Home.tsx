@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card, CardDeck, Jumbotron } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { apiUrl } from "../config/constants";
 import { selectUser } from "../store/user/selectors";
 import { Artwork } from "./artistPage";
+import { appLoading, appDoneLoading } from "../store/appState/actions";
 import "./custom.scss";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [artworks, setArtworks] = useState<Artwork[]>([]);
 
@@ -17,6 +19,7 @@ export default function Home() {
   }, []);
 
   async function fetchData() {
+    dispatch(appLoading());
     const response = await axios.get(`${apiUrl}/artworks`, {
       params: {
         apiArtworksUrl: encodeURIComponent(
@@ -25,6 +28,7 @@ export default function Home() {
       },
     });
     setArtworks(response.data._embedded.artworks);
+    dispatch(appDoneLoading());
   }
 
   async function fetchMoreData() {
