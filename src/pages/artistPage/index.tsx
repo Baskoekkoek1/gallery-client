@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Card, CardDeck, Jumbotron } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link, RouteProps, useParams } from "react-router-dom";
 import { apiUrl } from "../../config/constants";
+import { appDoneLoading, appLoading } from "../../store/appState/actions";
 
 export type Props = {
   location: {
@@ -49,6 +51,7 @@ export default function ArtistPage(props: RouteProps) {
   const params = new URLSearchParams(props?.location?.search);
   const apiArtistLink = params.get("apiArtistLink");
   const route_params: RouteParams = useParams();
+  const dispatch = useDispatch();
 
   const [artistData, setArtistData] = useState<Partial<ArtistData>>({});
   const [artworks, setArtworks] = useState([]);
@@ -62,6 +65,7 @@ export default function ArtistPage(props: RouteProps) {
   }, []);
 
   async function fetchData() {
+    dispatch(appLoading());
     const response = await axios.get(`${apiUrl}/artists/${route_params.name}`, {
       params: { apiArtistUrl: apiArtistLink },
     });
@@ -69,6 +73,7 @@ export default function ArtistPage(props: RouteProps) {
     const apiArtworksLink = response.data?._links?.artworks.href;
     const apiArtworksLinkMore = apiArtworksLink.concat("&size=1000");
     await fetchArtworks(apiArtworksLinkMore);
+    dispatch(appDoneLoading());
   }
   async function fetchArtworks(link: string) {
     const response = await axios.get(

@@ -8,6 +8,7 @@ import { addPainting, deletePainting } from "../../store/user/actions";
 import { Painting } from "../../store/user/types";
 import { selectUser } from "../../store/user/selectors";
 import { RouteParams } from "../../pages/artistPage/index";
+import { appDoneLoading, appLoading } from "../../store/appState/actions";
 
 export type ArtworkData = {
   title: string;
@@ -58,6 +59,7 @@ export default function Artwork(props: RouteProps) {
   const galleryId = user.gallery.id;
 
   async function fetchData() {
+    dispatch(appLoading());
     const response = await axios.get(
       `${apiUrl}/artists/artwork/${route_params.id}`,
       {
@@ -65,6 +67,7 @@ export default function Artwork(props: RouteProps) {
       }
     );
     setArtworkData(response.data);
+    dispatch(appDoneLoading());
   }
 
   useEffect(() => {
