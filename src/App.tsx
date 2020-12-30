@@ -10,12 +10,15 @@ import Artwork from "./pages/artworkPage";
 import Galleries from "./pages/Galleries";
 import Gallery from "./pages/Gallery";
 import MyGallery from "./pages/MyGallery/MyGallery";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserWithStoredToken } from "./store/user/actions";
 import "./customRoot.scss";
+import { selectAppLoading } from "./store/appState/selectors";
+import Loading from "./components/Loading";
 
 function App() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectAppLoading);
 
   useEffect(() => {
     dispatch(getUserWithStoredToken());
@@ -24,6 +27,7 @@ function App() {
   return (
     <div className="app">
       <Navigation />
+      {isLoading ? <Loading /> : null}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />

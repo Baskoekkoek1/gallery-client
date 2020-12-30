@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import { apiUrl } from "../../config/constants";
 import { Card, CardDeck } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { appDoneLoading, appLoading } from "../../store/appState/actions";
 
 export type Result = {
   type: string;
@@ -14,9 +16,11 @@ export type Result = {
 export default function Artists() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
+  const dispatch = useDispatch();
 
   function submit(event: React.MouseEvent<HTMLInputElement>) {
     async function fetchData() {
+      dispatch(appLoading());
       const response = await axios.get(`${apiUrl}/artists`, {
         params: { searchTerm: searchTerm },
       });
@@ -25,6 +29,7 @@ export default function Artists() {
         (res: Result) => res.type === "artist"
       );
       setResults(filteredResults);
+      dispatch(appDoneLoading());
     }
     fetchData();
     event.preventDefault();
