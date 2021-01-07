@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectMyGallery } from "../../store/user/selectors";
 import { apiUrl } from "../../config/constants";
 import { Button, Card, CardDeck, Jumbotron } from "react-bootstrap";
@@ -8,13 +8,11 @@ import { Link } from "react-router-dom";
 import { Artwork } from "../artistPage";
 import EditGalleryForm from "./EditGalleryForm";
 import { Painting } from "../../store/user/types";
-import { deletePainting } from "../../store/user/actions";
 import "./MyGallery.scss";
 
 export default function MyGallery() {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [editMode, setEditMode] = useState(false);
-  const dispatch = useDispatch();
   const thisGallery = useSelector(selectMyGallery);
   const id = thisGallery.id;
   const all_artworks: Painting[] = thisGallery.paintings;
@@ -44,10 +42,6 @@ export default function MyGallery() {
       }
       fetchArtwork();
     });
-  }
-
-  function removePainting(apiID: string | undefined) {
-    dispatch(deletePainting(apiID, id));
   }
 
   return (
